@@ -191,6 +191,22 @@ sub Run {
 #    );
 
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my %Ticket = $TicketObject->TicketGet(
+        TicketID => $Self->{TicketID},
+        UserID   => $Self->{UserID},
+    );
+
+    my $Queues     = $ConfigObject->Get('LockOnRead::Queues') || [];
+    my %OnlyQueues = map { $_ => 1 } @{ $Queues || [] };
+
+    if ( %OnlyQueues && !$OnlyQueues{ $Ticket{Queue} } ) {
+        return $LayoutObject->Redirect(
+            OP => "Action=AgentTicketZoom;TicketID=$Self->{TicketID}",
+        );
+    }
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $Action       = $ConfigObject->Get('LockOnRead::UnlockAction') || 'AgentTicketZoom';
     return $LayoutObject->Redirect(
         OP => "Action=$Action;TicketID=$Self->{TicketID}",

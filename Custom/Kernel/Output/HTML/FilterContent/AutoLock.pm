@@ -25,13 +25,14 @@ sub new {
 
 sub Run {
     my ( $Self, %Param ) = @_;
-    
+
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $LogObject    = $Kernel::OM->Get('Kernel::System::Log');
     my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
-    
+
     my $Action = $ParamObject->GetParam( Param => 'Action' );
 
     return 1 if !$Action;
@@ -63,6 +64,12 @@ sub Run {
     );
 
     return 1 if !$Access;
+
+    # queue check
+    my $Queues     = $ConfigObject->Get('LockOnRead::Queues') || [];
+    my %OnlyQueues = map { $_ => 1 } @{ $Queues || [] };
+
+    return 1 if %OnlyQueues && !$OnlyQueues{ $Ticket{Queue} };
 
     # check if update is needed!
     my ( $OwnerID, $Owner ) = $TicketObject->OwnerCheck( TicketID => $TicketID );

@@ -32,4 +32,13 @@
             <Item ValueType="String" ValueRegex="">Kernel::System::Ticket::Custom::LockOnRead</Item>
         </Value>
     </Setting>
+    <Setting Name="LockOnRead::Queues" Required="0" Valid="0">
+        <Description Translatable="1">Only auto-lock tickets in these queues.</Description>
+        <Navigation>LockOnRead::Core</Navigation>
+        <Value>
+            <Array>
+                <Item>Misc</Item>
+            </Array>
+        </Value>
+    </Setting>
 </otrs_config>
