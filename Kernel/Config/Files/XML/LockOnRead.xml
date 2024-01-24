@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_config version="2.0" init="Config">
-    <Setting Name="Frontend::Output::FilterContent###AutoLock" Required="0" Valid="1">
-        <Description Translatable="1">Modul to automatically lock a ticket when an agent opens the ticket zoom.</Description>
-        <Navigation>LockOnRead::Frontend::Base::OutputFilter</Navigation>
+    <Setting Name="PreApplicationModule###AutoLock" Required="0" Valid="1">
+        <Description Translatable="1">Automatically lock an unlocked ticket when an agent views it</Description>
+        <Navigation>LockOnRead::Core</Navigation>
         <Value>
-            <Hash>
-                <Item Key="Module">Kernel::Output::HTML::FilterContent::AutoLock</Item>
-                <Item Key="Debug">0</Item>
-                <Item Key="Templates">
-                    <Hash>
-                        <Item Key="AgentTicketZoom">1</Item>
-                    </Hash>
-                </Item>
-            </Hash>
+            <Item ValueType="String" ValueRegex="">Kernel::Modules::AutoLock</Item>
         </Value>
     </Setting>
     <Setting Name="LockOnRead::UnlockAction" Required="0" Valid="1">
@@ -38,6 +30,15 @@
         <Value>
             <Array>
                 <Item>Misc</Item>
+            </Array>
+        </Value>
+    </Setting>
+    <Setting Name="LockOnRead::States" Required="0" Valid="0">
+        <Description Translatable="1">Only auto-lock tickets in these states.</Description>
+        <Navigation>LockOnRead::Core</Navigation>
+        <Value>
+            <Array>
+                <Item>new</Item>
             </Array>
         </Value>
     </Setting>

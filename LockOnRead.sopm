@@ -15,7 +15,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Filelist>
         <File Permission="644" Location="Custom/Kernel/Modules/AgentTicketLock.pm" />
-        <File Permission="644" Location="Custom/Kernel/Output/HTML/FilterContent/AutoLock.pm" />
+        <File Permission="644" Location="Custom/Kernel/Modules/AutoLock.pm" />
         <File Permission="644" Location="Custom/Kernel/System/Ticket/Custom/LockOnRead.pm" />
         <File Permission="644" Location="Kernel/Config/Files/XML/LockOnRead.xml" />
     </Filelist>
